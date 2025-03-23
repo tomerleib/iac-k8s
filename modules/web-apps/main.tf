@@ -11,7 +11,18 @@ resource "kubernetes_config_map" "app_config" {
   }
 
   data = {
-    "message" = "Hello from ${var.name}"
+    "index.html" = <<-EOT
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>${var.name}</title>
+      </head>
+      <body>
+        <h1>${var.name}</h1>
+        <p>Pod Name: $${POD_NAME}</p>
+      </body>
+      </html>
+    EOT
   }
 
   depends_on = [var.namespace]
@@ -60,6 +71,7 @@ resource "kubernetes_deployment" "app" {
               }
             }
           }
+
 
           dynamic "env" {
             for_each = var.app_config.environment_variables
