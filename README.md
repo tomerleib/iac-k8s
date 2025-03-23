@@ -162,10 +162,10 @@ applications = {
    ```
 
 5. **Access Applications**
-   Once deployed, applications are accessible at:
-   - Web App: http://localhost/web
-   - API Service: http://localhost/api
-   - Dashboard: http://localhost/dashboard
+   Once deployed, use port-forward to access the applications:
+   - Web App: `kubectl port-forward -n web-app svc/web-app 8080:80` http://localhost:8080
+   - API Service: `kubectl port-forward -n api svc/api-service 8081:80` http://localhost:8081
+   - Dashboard: `kubectl port-forward -n dashboard svc/dashboard 8082:80` http://localhost:8082
 
 6. **Verify Deployment**
    ```bash
@@ -175,9 +175,8 @@ applications = {
    # Verify services
    kubectl get svc -A
 
-   # Review ingress configuration
-   kubectl get ingress -A
-   ```
+### ToDo:
+At the moment there's an issue exposing with Ingress from Kind. I'm working on a fix
 
 ## Adding Applications
 
@@ -211,9 +210,3 @@ applications = {
   }
 }
 ```
-
-kubectl port-forward -n web-app svc/web-app 8080:80
-kubectl port-forward -n api svc/api-service 8081:80
-kubectl port-forward -n dashboard svc/dashboard 8082:80
-
-
